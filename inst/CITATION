@@ -1,0 +1,23 @@
+bibentry(
+  bibtype  = "Article",
+  title    = "A multi-scale evaluation of 30 empirical models for reference evapotranspiration estimation in a data-scarce semi-arid region: A case study of Jhansi, India",
+  author   = c(
+    person("Ajay N.", "Satpute"),
+    person("Samir", "Barman"),
+    person("Amit Kumar", "Singh"),
+    person("Avijit", "Ghosh"),
+    person("Gaurendra", "Gupta")
+  ),
+  journal  = "Journal of Hydrology: Regional Studies",
+  year     = "2026",
+  doi      = "10.1016/j.ejrh.2026.103925",
+  header   = "To cite ET0RadModels in publications use:",
+  textVersion = paste(
+    "Satpute, A.N., Barman, S., Singh, A.K., Ghosh, A., & Gupta, G. (2026).",
+    "A multi-scale evaluation of 30 empirical models for reference",
+    "evapotranspiration estimation in a data-scarce semi-arid region:",
+    "A case study of Jhansi, India.",
+    "Journal of Hydrology: Regional Studies.",
+    "doi:10.1016/j.ejrh.2026.103925"
+  )
+)

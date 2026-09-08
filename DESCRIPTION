@@ -1,0 +1,36 @@
+Package: ET0RadModels
+Type: Package
+Title: Evapotranspiration Estimation Using Radiation-Based Models
+Version: 1.0.0
+Authors@R: c(
+    person("Ajay N.", "Satpute", role = "aut"),
+    person("Samir", "Barman", email = "samir.igfri@gmail.com",
+           role = c("aut", "cre"),
+           comment = c(ORCID = "0000-0001-8181-8346")),
+    person("Amit Kumar", "Singh", role = "aut"),
+    person("Avijit", "Ghosh", role = "aut"),
+    person("Gaurendra", "Gupta", role = "aut"))
+Description: Provides functions to estimate daily reference evapotranspiration
+    (ET0) using 10 radiation-based empirical models, with the FAO
+    Penman-Monteith method included as the standard reference for model
+    comparison. Includes statistical evaluation metrics (NSE, RMSE, MAE, MBE,
+    R-squared, and others) and visualization tools (scatter plots, Taylor
+    diagrams). Based on Singh et al. (2026)
+    <doi:10.1016/j.ejrh.2026.103925>.
+License: GPL (>= 3) + file LICENSE
+URL: https://github.com/samirigfri/ET0RadModels
+BugReports: https://github.com/samirigfri/ET0RadModels/issues
+Encoding: UTF-8
+LazyData: true
+RoxygenNote: 7.3.3
+Depends: R (>= 3.5.0)
+Imports:
+    graphics,
+    grDevices,
+    stats
+Suggests:
+    testthat (>= 3.0.0),
+    knitr,
+    rmarkdown
+Config/testthat/edition: 3
+VignetteBuilder: knitr

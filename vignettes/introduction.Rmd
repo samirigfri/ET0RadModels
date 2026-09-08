@@ -1,0 +1,136 @@
+---
+title: "Introduction to ET0RadModels"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Introduction to ET0RadModels}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.width = 7,
+  fig.height = 5
+)
+```
+
+## Overview
+
+The `ET0RadModels` package provides 10 radiation-based empirical models for
+estimating daily reference evapotranspiration (ET0). The FAO Penman-Monteith
+method is included as the standard reference against which the radiation-based
+models are compared and evaluated.
+
+Radiation-based models require solar radiation (or sunshine hours) as the primary
+input, making them suitable where radiation data are available but wind speed or
+humidity data are limited.
+
+### Radiation-Based Models
+
+| # | Model | Function | Primary Inputs |
+|---|-------|----------|----------------|
+| 1 | Jensen-Haise (1963) | `et0_jensen_haise()` | Tmean, J, lat, n |
+| 2 | McGuinness-Bordne (1972) | `et0_mcguinness_bordne()` | Tmean, J, lat, n |
+| 3 | Irmak (2003) | `et0_irmak()` | Tmean, J, lat, n |
+| 4 | Makkink (1957) | `et0_makkink()` | Tmean, J, lat, n, z |
+| 5 | Turc (1961) | `et0_turc()` | Tmean, J, lat, n |
+| 6 | Caprio (1974) | `et0_caprio()` | Tmean, J, lat, n |
+| 7 | Abtew (1996) | `et0_abtew()` | Tmean, J, lat, n |
+| 8 | Priestley-Taylor (1972) | `et0_priestley_taylor()` | Tmin, Tmax, RH, n, J, lat, z |
+| 9 | Jones-Ritchie (1990) | `et0_jones_ritchie()` | Tmin, Tmax, J, lat, n |
+| 10 | Hargreaves (1975) | `et0_hargreaves()` | Tmean, J, lat, n |
+
+## Quick Start
+
+### Loading the Package and Data
+
+```{r load}
+library(ET0RadModels)
+data(jhansi_weather)
+head(jhansi_weather)
+```
+
+### Computing ET0 for a Single Day
+
+```{r single-day}
+# FAO Penman-Monteith (reference)
+et0_fao_pm(Tmin = 15, Tmax = 35, RH_morning = 90, RH_evening = 40,
+           u2 = 1.5, n = 9, J = 172, lat = 25.43, z = 216)
+
+# Jensen-Haise (simple radiation-based)
+et0_jensen_haise(Tmean = 25, J = 172, lat = 25.43, n = 9)
+
+# Priestley-Taylor (uses net radiation)
+et0_priestley_taylor(Tmin = 15, Tmax = 35, RH_morning = 90,
+                     RH_evening = 40, n = 9, J = 172,
+                     lat = 25.43, z = 216)
+```
+
+### Computing All 10 Radiation-Based Models at Once
+
+```{r all-models}
+result <- et0_rad_all(
+  Tmin       = jhansi_weather$Tmin[1:5],
+  Tmax       = jhansi_weather$Tmax[1:5],
+  RH_morning = jhansi_weather$RH_morning[1:5],
+  RH_evening = jhansi_weather$RH_evening[1:5],
+  u2         = jhansi_weather$WS[1:5],
+  n          = jhansi_weather$SSH[1:5],
+  J          = jhansi_weather$J[1:5],
+  lat        = 25.43,
+  z          = 216
+)
+round(result, 2)
+```
+
+## Evaluating Model Performance Against FAO-PM
+
+```{r evaluation}
+full_result <- et0_rad_all(
+  Tmin       = jhansi_weather$Tmin,
+  Tmax       = jhansi_weather$Tmax,
+  RH_morning = jhansi_weather$RH_morning,
+  RH_evening = jhansi_weather$RH_evening,
+  u2         = jhansi_weather$WS,
+  n          = jhansi_weather$SSH,
+  J          = jhansi_weather$J,
+  lat        = 25.43,
+  z          = 216
+)
+
+obs   <- full_result$FAO_PM
+preds <- full_result[, c("Jensen_Haise", "Makkink",
+                          "Priestley_Taylor", "Turc")]
+metrics <- evaluate_models(obs, preds)
+print(metrics)
+```
+
+## Visualization
+
+### Scatter Plot
+
+```{r scatter, fig.width=6, fig.height=6}
+plot_scatter(obs, preds,
+             main = "Radiation-Based Models vs FAO-PM")
+```
+
+### Taylor Diagram
+
+```{r taylor, fig.width=7, fig.height=7}
+plot_taylor(obs, preds,
+            main = "Taylor Diagram - Radiation-Based Models")
+```
+
+## References
+
+- Allen, R.G., Pereira, L.S., Raes, D., & Smith, M. (1998). Crop
+  evapotranspiration: Guidelines for computing crop water requirements.
+  FAO Irrigation and Drainage Paper No. 56.
+- Satpute, A.N., Barman, S., Singh, A.K., Ghosh, A., & Gupta, G. (2026).
+  A multi-scale evaluation of 30 empirical models for reference
+  evapotranspiration estimation in a data-scarce semi-arid region:
+  A case study of Jhansi, India.
+  *Journal of Hydrology: Regional Studies*.
+  https://doi.org/10.1016/j.ejrh.2026.103925
