@@ -37,14 +37,14 @@ psychrometric_constant <- function(P = NULL, z = 0) {
 #' Computes the saturation vapor pressure at a given temperature using the
 #' Tetens formula (Allen et al., 1998).
 #'
-#' @param T Air temperature (degrees Celsius).
+#' @param Temp Air temperature (degrees Celsius).
 #' @return Saturation vapor pressure (kPa).
 #' @references Allen et al. (1998), FAO-56, Eq. 11.
 #' @export
 #' @examples
 #' saturation_vapor_pressure(25)
-saturation_vapor_pressure <- function(T) {
-  0.6108 * exp((17.27 * T) / (T + 237.3))
+saturation_vapor_pressure <- function(Temp) {
+  0.6108 * exp((17.27 * Temp) / (Temp + 237.3))
 }
 
 #' Actual Vapor Pressure

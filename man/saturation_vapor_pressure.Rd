@@ -4,10 +4,10 @@
 \alias{saturation_vapor_pressure}
 \title{Saturation Vapor Pressure}
 \usage{
-saturation_vapor_pressure(T)
+saturation_vapor_pressure(Temp)
 }
 \arguments{
-\item{T}{Air temperature (degrees Celsius).}
+\item{Temp}{Air temperature (degrees Celsius).}
 }
 \value{
 Saturation vapor pressure (kPa).

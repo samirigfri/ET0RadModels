@@ -11,13 +11,14 @@ Authors@R: c(
     person("Avijit", "Ghosh", role = "aut"),
     person("Gaurendra", "Gupta", role = "aut"))
 Description: Provides functions to estimate daily reference evapotranspiration
-    (ET0) using 10 radiation-based empirical models, with the FAO
-    Penman-Monteith method included as the standard reference for model
-    comparison. Includes statistical evaluation metrics (NSE, RMSE, MAE, MBE,
-    R-squared, and others) and visualization tools (scatter plots, Taylor
-    diagrams). Based on Singh et al. (2026)
-    <doi:10.1016/j.ejrh.2026.103925>.
-License: GPL (>= 3) + file LICENSE
+    (ET0) using 10 radiation-based empirical models, with the Food and
+    Agriculture Organization (FAO) Penman-Monteith method included as the
+    standard reference for model comparison. Includes statistical evaluation
+    metrics, such as Nash-Sutcliffe efficiency (NSE), root mean square error
+    (RMSE), mean absolute error (MAE), and mean bias error (MBE), and
+    visualization tools (scatter plots and Taylor diagrams). Based on
+    Singh et al. (2026) <doi:10.1016/j.ejrh.2026.103925>.
+License: GPL (>= 3)
 URL: https://github.com/samirigfri/ET0RadModels
 BugReports: https://github.com/samirigfri/ET0RadModels/issues
 Encoding: UTF-8
